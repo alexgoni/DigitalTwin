@@ -29,6 +29,8 @@ import Level28 from "../3Dmodels/plant_level/Level28";
 import Level29 from "../3Dmodels/plant_level/Level29";
 import Level30 from "../3Dmodels/plant_level/Level30";
 import { useEffect } from "react";
+import { currentModelIndex, growthDuration, warningFlag } from "@/recoil/state";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const ModelContainer = ({ model: ModelComponent, play, ...props }) => {
   return (
@@ -38,11 +40,12 @@ const ModelContainer = ({ model: ModelComponent, play, ...props }) => {
   );
 };
 
-export default function SwitchingModel({
-  currentModelIndex,
-  setCurrentModelIndex,
-  warning,
-}) {
+export default function SwitchingModel() {
+  const duration = useRecoilValue(growthDuration);
+  const [currentModelIdx, setCurrentModelIdx] =
+    useRecoilState(currentModelIndex);
+  const [warning, setWarning] = useRecoilState(warningFlag);
+
   const plantLevels = [
     Level1,
     Level2,
@@ -76,15 +79,14 @@ export default function SwitchingModel({
     Level30,
   ];
   const modelNum = plantLevels.length;
-  const CurrentModel = plantLevels[currentModelIndex];
+  const CurrentModel = plantLevels[currentModelIdx];
 
-  const DURATION = 10000;
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (!warning) {
-        setCurrentModelIndex((prevIndex) => (prevIndex + 1) % modelNum);
+        setCurrentModelIdx((prevIndex) => (prevIndex + 1) % modelNum);
       }
-    }, DURATION); // TODO: recoli 적용
+    }, duration);
 
     return () => {
       clearInterval(intervalId);

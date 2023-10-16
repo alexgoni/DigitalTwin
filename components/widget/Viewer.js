@@ -7,9 +7,6 @@ import SwitchingModel from "../handler/SwitchingModel";
 import Background from "../3Dmodels/Background";
 
 export default function Viewer() {
-  const [currentModelIndex, setCurrentModelIndex] = useState(0);
-  const [warning, setWarning] = useState(false);
-
   return (
     <div className="h-[500px] border-2 border-teal-500 shadow-2xl">
       <Canvas>
@@ -17,11 +14,7 @@ export default function Viewer() {
         <directionalLight intensity={2.2} position={[10, 10, 5]} />
         <CameraPosition position={[0, 5, 15]} />
         <Background position={[0, -6, -3]} />
-        <SwitchingModel
-          currentModelIndex={currentModelIndex}
-          setCurrentModelIndex={setCurrentModelIndex}
-          warning={warning}
-        />
+        <SwitchingModel />
         <OrbitControls />
       </Canvas>
     </div>
