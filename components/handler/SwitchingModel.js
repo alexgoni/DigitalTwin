@@ -42,9 +42,9 @@ const ModelContainer = ({ model: ModelComponent, play, ...props }) => {
 
 export default function SwitchingModel() {
   const duration = useRecoilValue(growthDuration);
+  const warning = useRecoilValue(warningFlag);
   const [currentModelIdx, setCurrentModelIdx] =
     useRecoilState(currentModelIndex);
-  const [warning, setWarning] = useRecoilState(warningFlag);
 
   const plantLevels = [
     Level1,
@@ -91,7 +91,7 @@ export default function SwitchingModel() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [modelNum]);
+  }, [modelNum, warning]);
 
   return (
     <ModelContainer

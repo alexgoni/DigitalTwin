@@ -3,13 +3,39 @@ import Navbar from "@/components/widget/Navbar";
 import Viewer from "@/components/widget/Viewer";
 import { currentModelIndex, warningFlag } from "@/recoil/state";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function Index() {
   const [chats, setChats] = useState([]);
-  const [currentModelIdx, setCurrentModelIdx] =
-    useRecoilState(currentModelIndex);
-  const [warning, setWarning] = useRecoilState(warningFlag);
+  const currentModelIdx = useRecoilValue(currentModelIndex);
+  const setWarning = useSetRecoilState(warningFlag);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `/api/sensor_data?modelIndex=${currentModelIdx}`,
+        );
+        const data = await response.json();
+
+        // 병해상황 발생
+        if (data.messages.length > 0) {
+          const newChat = {
+            message: data.messages.join(" "),
+            time: data.time,
+            warning: data.messages.length >= 3,
+          };
+          setChats((prevChats) => [...prevChats, newChat]);
+          // 병해조건 3개 이상 시 warning 발생
+          setWarning(newChat.warning);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [currentModelIdx]);
+  // 생장간격마다 실행
 
   return (
     <>
