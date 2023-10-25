@@ -40,7 +40,7 @@ const ModelContainer = ({ model: ModelComponent, play, ...props }) => {
   );
 };
 
-export default function SwitchingModel() {
+export default function SwitchingModel({ setLoading }) {
   const duration = useRecoilValue(growthDuration);
   const warning = useRecoilValue(warningFlag);
   const [currentModelIdx, setCurrentModelIdx] =
@@ -78,8 +78,14 @@ export default function SwitchingModel() {
     Level29,
     Level30,
   ];
+
   const modelNum = plantLevels.length;
   const CurrentModel = plantLevels[currentModelIdx];
+
+  // 로드가 완료되면 loading state false로 변경
+  useEffect(() => {
+    setLoading(false);
+  }, [setLoading]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {

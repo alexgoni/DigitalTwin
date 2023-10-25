@@ -34,8 +34,7 @@ export default function Index() {
       }
     };
     fetchData();
-  }, [currentModelIdx]);
-  // 생장간격마다 실행
+  }, [currentModelIdx]); // 생장간격마다 실행
 
   return (
     <>
