@@ -1,7 +1,7 @@
 export default function Navbar() {
   return (
     <>
-      <nav className="sticky top-0 z-10 bg-black p-3 text-white shadow-xl">
+      <nav className="sticky top-0 z-10 w-full bg-black p-3 text-white shadow-xl">
         <div className="font-barlow mt-2 cursor-pointer text-center text-3xl font-semibold tracking-wide">
           KETI Project
         </div>

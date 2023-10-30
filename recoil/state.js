@@ -14,3 +14,8 @@ export const warningFlag = atom({
   key: "warningFlag",
   default: false,
 });
+
+export const modelLoadingState = atom({
+  key: "modelLoadingState",
+  default: true,
+});

@@ -29,8 +29,13 @@ import Level28 from "../3Dmodels/plant_level/Level28";
 import Level29 from "../3Dmodels/plant_level/Level29";
 import Level30 from "../3Dmodels/plant_level/Level30";
 import { useEffect } from "react";
-import { currentModelIndex, growthDuration, warningFlag } from "@/recoil/state";
-import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  currentModelIndex,
+  growthDuration,
+  modelLoadingState,
+  warningFlag,
+} from "@/recoil/state";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 const ModelContainer = ({ model: ModelComponent, play, ...props }) => {
   return (
@@ -40,11 +45,12 @@ const ModelContainer = ({ model: ModelComponent, play, ...props }) => {
   );
 };
 
-export default function SwitchingModel({ setLoading }) {
+export default function SwitchingModel() {
   const duration = useRecoilValue(growthDuration);
   const warning = useRecoilValue(warningFlag);
   const [currentModelIdx, setCurrentModelIdx] =
     useRecoilState(currentModelIndex);
+  const setLoading = useSetRecoilState(modelLoadingState);
 
   const plantLevels = [
     Level1,
@@ -85,7 +91,7 @@ export default function SwitchingModel({ setLoading }) {
   // 로드가 완료되면 loading state false로 변경
   useEffect(() => {
     setLoading(false);
-  }, [setLoading]);
+  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
