@@ -1,27 +1,18 @@
+import Link from "next/link";
+
 export default function Navbar() {
   return (
     <>
-      <nav className="sticky top-0 z-10 w-full bg-black p-3 text-white shadow-xl">
-        <div className="font-barlow mt-2 cursor-pointer text-center text-3xl font-semibold tracking-wide">
-          KETI Project
-        </div>
-
-        <div className="flex flex-wrap items-center justify-between px-8 text-sm">
-          <div className="flex space-x-10  text-teal-200">
-            <div className="cursor-pointer hover:text-gray-300">Dashboard</div>
-            <div className="cursor-pointer hover:text-gray-300">
-              3D Visualization
-            </div>
-            <div className="cursor-pointer hover:text-gray-300">VR & AR</div>
+      <nav className="sticky top-0 z-10 w-full bg-black p-3 py-5 text-white shadow-xl">
+        <div className="flex items-end justify-between">
+          <div className="-mb-2 ml-4 cursor-pointer text-sm text-red-200 hover:text-gray-300">
+            <Link href="/user/mypage">My Page</Link>
           </div>
-
-          <div className="flex items-center space-x-8">
-            <div className="cursor-pointer text-red-200 hover:text-gray-300">
-              Admin
-            </div>
-            <div className="hidden cursor-pointer rounded-lg border border-white px-5 py-2 text-white hover:border-transparent hover:bg-white hover:text-teal-500 sm:inline-block">
-              Login
-            </div>
+          <div className="font-barlow cursor-pointer text-4xl font-semibold tracking-wide">
+            KETI Project
+          </div>
+          <div className="-mb-2 mr-4 cursor-pointer rounded-md border border-white px-3 py-1 text-sm text-white hover:border-transparent hover:bg-white hover:text-teal-500 sm:inline-block">
+            <Link href="/user/login">Login</Link>
           </div>
         </div>
       </nav>

@@ -1,8 +1,10 @@
+import authentication from "@/components/handler/Authentication";
 import AlertWindow from "@/components/widget/AlertWindow";
 import InfoBox from "@/components/widget/info/InfoBox";
 import Navbar from "@/components/widget/Navbar";
 import Viewer from "@/components/widget/Viewer";
 import { currentModelIndex, warningFlag } from "@/recoil/state";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
@@ -10,6 +12,15 @@ export default function Index() {
   const [chats, setChats] = useState([]);
   const currentModelIdx = useRecoilValue(currentModelIndex);
   const setWarning = useSetRecoilState(warningFlag);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      const isLoggedIn = await authentication();
+      if (!isLoggedIn) router.push("/user/login");
+    })();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

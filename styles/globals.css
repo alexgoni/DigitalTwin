@@ -1,5 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital@1&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Borel&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=REM:wght@800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,6 +10,18 @@
 
 body {
   width: 100%;
+}
+
+.font-borel {
+  font-family: "Borel", cursive;
+}
+
+.font-ubuntu {
+  font-family: "Ubuntu", sans-serif;
+}
+
+.font-rem {
+  font-family: "REM", sans-serif;
 }
 
 .font-barlow {

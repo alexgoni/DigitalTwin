@@ -1,4 +1,4 @@
-import connection from "@/components/DB";
+import connection from "@/components/db/dataDB";
 
 function checkEnv(currentEnv) {
   const message = [];
