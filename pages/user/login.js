@@ -8,6 +8,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
   const router = useRouter();
 
   const handleLogin = async (e) => {
@@ -17,7 +18,7 @@ export default function Login() {
         email,
         password,
       });
-      router.push("/");
+      router.push("/user/mypage");
     } catch (error) {
       console.error("Failed to login:", error.message);
       setMessage(error.message);

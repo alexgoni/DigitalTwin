@@ -3,7 +3,7 @@ import AlertWindow from "@/components/widget/AlertWindow";
 import InfoBox from "@/components/widget/info/InfoBox";
 import Navbar from "@/components/widget/Navbar";
 import Viewer from "@/components/widget/Viewer";
-import { currentModelIndex, warningFlag } from "@/recoil/state";
+import { currentModelIndex, growthDuration, warningFlag } from "@/recoil/state";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -12,8 +12,32 @@ export default function Index() {
   const [chats, setChats] = useState([]);
   const currentModelIdx = useRecoilValue(currentModelIndex);
   const setWarning = useSetRecoilState(warningFlag);
+  const setDuration = useSetRecoilState(growthDuration);
 
   const router = useRouter();
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `/api/sensor_data?modelIndex=${currentModelIdx}`,
+      );
+      const data = await response.json();
+
+      // 병해상황 발생
+      if (data.messages.length > 0) {
+        const newChat = {
+          message: data.messages.join(" "),
+          time: data.time,
+          warning: data.messages.length >= 3,
+        };
+        setChats((prevChats) => [...prevChats, newChat]);
+        // 병해조건 3개 이상 시 warning 발생
+        setWarning(newChat.warning);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -23,28 +47,14 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `/api/sensor_data?modelIndex=${currentModelIdx}`,
-        );
-        const data = await response.json();
+    const userInfoString = localStorage.getItem("userInfo");
+    if (userInfoString) {
+      const userInfo = JSON.parse(userInfoString);
+      setDuration(userInfo.duration * 1000);
+    }
+  }, []);
 
-        // 병해상황 발생
-        if (data.messages.length > 0) {
-          const newChat = {
-            message: data.messages.join(" "),
-            time: data.time,
-            warning: data.messages.length >= 3,
-          };
-          setChats((prevChats) => [...prevChats, newChat]);
-          // 병해조건 3개 이상 시 warning 발생
-          setWarning(newChat.warning);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  useEffect(() => {
     fetchData();
   }, [currentModelIdx]); // 생장간격마다 실행
 

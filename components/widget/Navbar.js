@@ -9,7 +9,7 @@ export default function Navbar() {
             <Link href="/user/mypage">My Page</Link>
           </div>
           <div className="font-barlow cursor-pointer text-4xl font-semibold tracking-wide">
-            KETI Project
+            <Link href="/">KETI Project</Link>
           </div>
           <div className="-mb-2 mr-4 cursor-pointer rounded-md border border-white px-3 py-1 text-sm text-white hover:border-transparent hover:bg-white hover:text-teal-500 sm:inline-block">
             <Link href="/user/login">Login</Link>
