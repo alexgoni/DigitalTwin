@@ -1,9 +1,9 @@
 import { useEffect } from "react";
+import defaultCamera from "./Camera";
+import defaultViewer from "./DefaultViewer";
 import * as Cesium from "cesium";
-import defaultViewer from "@/components/cesium/DefaultViewer";
-import defaultCamera from "@/components/cesium/Camera";
 
-export default function Test() {
+export default function CesiumContainer({ setMainStart }) {
   useEffect(() => {
     const viewer = defaultViewer();
     viewer.scene.globe.depthTestAgainstTerrain = true;
@@ -47,20 +47,16 @@ export default function Test() {
       const pickedObject = viewer.scene.pick(click.position);
 
       if (Cesium.defined(pickedObject) && pickedObject.id === greenhouse) {
+        setMainStart(true);
         viewer.destroy();
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-
-    return () => {
-      viewer.destroy();
-      handler.destroy();
-    };
   }, []);
 
   return (
     <div
       id="cesiumContainer"
-      className="m-0 h-screen w-screen overflow-hidden p-0"
+      className="m-0 h-full w-full overflow-hidden p-0"
     ></div>
   );
 }
