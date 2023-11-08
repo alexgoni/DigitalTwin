@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export default function AlertWindow({ chats }) {
   return (
     <div className="flex flex-col space-y-10">
@@ -20,8 +22,22 @@ export default function AlertWindow({ chats }) {
 }
 
 function ChatBubble({ chats }) {
+  const [isClient, setIsClient] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    setIsClient(true);
+
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return chats.map((chat, index) => {
-    const formattedDate = new Date(chat.time).toLocaleString("en-US", {
+    const formattedDate = currentTime.toLocaleString("en-US", {
       month: "numeric",
       day: "numeric",
       hour: "numeric",
@@ -32,13 +48,13 @@ function ChatBubble({ chats }) {
       ? "chat-bubble chat-bubble-error"
       : "chat-bubble";
 
-    return (
-      <div key={index} className="chat chat-start">
+    return isClient ? (
+      <div key={index} className="chat chat-start w-4/5">
         <div className={bubbleClassName}>{chat.message}</div>
         <div className="chat-footer">
           <time className="text-xs opacity-50">{formattedDate}</time>
         </div>
       </div>
-    );
+    ) : null;
   });
 }

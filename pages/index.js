@@ -6,12 +6,12 @@ import Viewer from "@/components/widget/Viewer";
 import { currentModelIndex, growthDuration, warningFlag } from "@/recoil/state";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function Index() {
   const [chats, setChats] = useState([]);
   const currentModelIdx = useRecoilValue(currentModelIndex);
-  const setWarning = useSetRecoilState(warningFlag);
+  const [warning, setWarning] = useRecoilState(warningFlag);
   const setDuration = useSetRecoilState(growthDuration);
 
   const router = useRouter();

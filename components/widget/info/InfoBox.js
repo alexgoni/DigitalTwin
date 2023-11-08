@@ -1,9 +1,13 @@
+import { currentModelIndex, warningFlag } from "@/recoil/state";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 import Clock from "./Clock";
 import Timer from "./Timer";
 
 export default function InfoBox() {
   const [plantName, setPlantName] = useState("");
+  const warning = useRecoilValue(warningFlag);
+  const currentLevel = useRecoilValue(currentModelIndex);
 
   useEffect(() => {
     const userInfoString = localStorage.getItem("userInfo");
@@ -18,9 +22,10 @@ export default function InfoBox() {
       <Timer />
       <Clock />
       <span>작물 : {plantName}</span>
+      <span>현재 단계 : {`${currentLevel + 1} Lv`}</span>
       <div className="flex items-center justify-between">
         <span>작물 상태 : </span>
-        <span className="text-lg">😀</span>
+        <span className="text-lg">{warning ? <>😫</> : <>😀</>}</span>
       </div>
     </div>
   );

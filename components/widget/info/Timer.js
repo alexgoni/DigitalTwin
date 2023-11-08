@@ -1,14 +1,15 @@
-import { growthDuration, modelLoadingState } from "@/recoil/state";
+import { growthDuration, modelLoadingState, warningFlag } from "@/recoil/state";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useRecoilValue } from "recoil";
 
 export default function Timer() {
   const durationInSecond = useRecoilValue(growthDuration) / 1000;
   const loading = useRecoilValue(modelLoadingState);
+  const warning = useRecoilValue(warningFlag);
 
   return (
     <CountdownCircleTimer
-      isPlaying={!loading}
+      isPlaying={!loading && !warning}
       size={25}
       strokeWidth={2}
       duration={durationInSecond}

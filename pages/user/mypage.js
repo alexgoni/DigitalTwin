@@ -51,7 +51,7 @@ export default function MyPage() {
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="font-ubuntu">이름</span>
+                <span className="font-ubuntu">사용자</span>
                 <input
                   type="text"
                   value={name}
